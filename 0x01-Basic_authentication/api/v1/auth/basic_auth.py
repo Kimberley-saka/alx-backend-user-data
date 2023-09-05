@@ -56,5 +56,5 @@ def extract_user_credentials(
     if not isinstance(decoded_base64_authorization_header, str):
         return (None, None)
 
-    email, password = decoded_base64_authorization_header.split(':', 1)
+    email, password = decoded_base64_authorization_header.split(':')
     return (email, password)
