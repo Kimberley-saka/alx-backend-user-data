@@ -1,8 +1,8 @@
-#!/usr/bin/enauth_v python3
+#!/usr/bin/env python3
 """
 Basic authentication
 """
-from auth import Auth
+from api.v1.auth.auth import Auth
 import base64
 
 
@@ -29,15 +29,15 @@ class BasicAuth(Auth):
 def decode_base64_authorization_header(
           self, base64_authorization_header: str) -> str:
     """
-    Decode auth_value of a Base64 string base64_authorization_header
+    Decode value of a Base64 string base64_authorization_header
     """
     if base64_authorization_header is None or not isinstance(
          base64_authorization_header, str):
         return None
 
     try:
-        auth_value = base64_authorization_header.encode('utf-8')
-        decoded_auth_value = base64.b64decode(auth_value)
-        return decoded_auth_value.decode('utf-8')
+        value = base64_authorization_header.encode('utf-8')
+        decoded_value = base64.b64decode(value)
+        return decoded_value.decode('utf-8')
     except Exception:
         return None
