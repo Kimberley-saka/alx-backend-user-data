@@ -36,8 +36,7 @@ def decode_base64_authorization_header(
         return None
 
     try:
-        value = base64_authorization_header.encode('utf-8')
-        decoded_value = base64.b64decode(value)
-        return decoded_value.decode('utf-8')
+        decoded_data = base64.b64decode(base64_authorization_header)
+        return decoded_data.decode('utf-8')
     except Exception:
         return None
