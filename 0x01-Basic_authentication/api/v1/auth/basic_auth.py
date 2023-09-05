@@ -49,12 +49,12 @@ def extract_user_credentials(
     """
     if decoded_base64_authorization_header is None:
         return (None, None)
-    
-    if ':' not in decoded_base64_authorization_header:
-        return (None, None)
 
     if not isinstance(decoded_base64_authorization_header, str):
         return (None, None)
 
-    email, password = decoded_base64_authorization_header.split(':')
+    if ':' not in decoded_base64_authorization_header:
+        return (None, None)
+
+    email, password = decoded_base64_authorization_header.split(':', 1)
     return (email, password)
