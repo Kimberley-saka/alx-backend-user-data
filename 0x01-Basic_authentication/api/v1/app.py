@@ -31,6 +31,7 @@ def auth_before_request():
     else:
         excluded_list = ['/api/v1/status/',
                          '/api/v1/unauthorized/', '/api/v1/forbidden/']
+        pass
 
         if auth.require_auth(request.path, excluded_list):
             if auth.authorization_header(request) is None:
