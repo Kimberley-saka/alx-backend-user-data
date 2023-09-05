@@ -46,7 +46,7 @@ def decode_base64_authorization_header(
 def extract_user_credentials(
         self, decoded_base64_authorization_header: str) -> (str, str):
     """
-    Returns the user email and password from the Base64 decoded value
+    Returns the user email and password from the Base64 decoded_val value
     """
     if decoded_base64_authorization_header is None:
         return (None, None)
@@ -81,3 +81,21 @@ def user_object_from_credentials(self, user_email: str,
             return user
 
     return None
+
+
+def current_user(self, request=None) -> TypeVar('User'):
+    """
+    Piecing it all together
+    """
+    authorization_header = self.authorization_header(request)
+    if authorization_header is not None:
+        value = self.extract_base64_authorization_header(authorization_header)
+        if value is not None:
+            decoded_val = self.decode_base64_authorization_header(value)
+            if decoded_val is not None:
+                email, password = self.extract_user_credentials(decoded_val)
+                if email is not None:
+                    return self.user_object_from_credentials(
+                        email, password)
+
+    return
