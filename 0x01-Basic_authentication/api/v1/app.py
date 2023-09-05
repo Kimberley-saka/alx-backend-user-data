@@ -15,13 +15,16 @@ CORS(app, resources={r"/api/v1/*": {"origins": "*"}})
 auth = None
 
 AUTH_TYPE = os.getenv("AUTH_TYPE")
-if AUTH_TYPE == 'auth':
+if AUTH_TYPE is 'auth':
     from api.v1.auth.auth import Auth
     auth = Auth()
 
 
 @app.before_request
-def before_request():
+def auth_before_request():
+    """
+    executed before the request
+    """
     if auth is None:
         pass
 
