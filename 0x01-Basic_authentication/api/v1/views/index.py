@@ -37,6 +37,6 @@ def unauthorized_access() -> str:
 @app_views.route('/forbidden', methods=['GET'], strict_slashes=False)
 def unauthorized_access() -> str:
     """
-    unauthorized error handler
+    forbidden error handler
     """
     abort(403, description="Forbidden")
