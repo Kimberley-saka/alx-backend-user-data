@@ -90,10 +90,8 @@ class Auth:
         """
         Destroy session
         """
-        try:
-            user = self._db.find_user_by(id=user_id)
-        except NoResultFound:
-            return None
-
-        user.session_id = None
+        user = self._db.find_user_by(id=user_id)
+        if user:
+            user.session_id = None
+            self._db.update_user(user)
         return None
