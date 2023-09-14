@@ -67,12 +67,11 @@ class Auth:
         """
         try:
             user = self._db.find_user_by(email=email)
-            if user:
-                session_id = _generate_uuid()
-                self._db.update_user(user.id, session_id=session_id)
-                return session_id
         except NoResultFound:
             return None
+        else:
+            user.session_id = _generate_uuid()
+            return user.session_id
 
     def get_user_from_session_id(self, session_id: str) -> User:
         """
@@ -86,3 +85,15 @@ class Auth:
             return None
         else:
             return user
+
+    def destroy_session(self, user_id: int) -> None:
+        """
+        Destroy session
+        """
+        try:
+            user = self._db.find_user_by(id=user_id)
+        except NoResultFound:
+            return None
+
+        user.session_id = None
+        return None
