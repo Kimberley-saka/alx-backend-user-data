@@ -43,9 +43,11 @@ class Auth:
         """
         tries to locate user by email
         """
-        user = self._db.find_user_by(email)
-        if user is not None:
-            return bcrypt.checkpw(
-                    password.encode('utf-8'), user.hashed_password)
-
-        return False
+        try:
+            user = self._db.find_user_by(email)
+            if user is not None:
+                return bcrypt.checkpw(
+                        password.encode('utf-8'), user.hashed_password)
+            return False
+        except NoResultFound:
+            return False
