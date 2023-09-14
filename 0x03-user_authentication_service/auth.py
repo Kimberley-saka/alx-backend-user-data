@@ -3,6 +3,7 @@
 Create passoword hash
 """
 import bcrypt
+import uuid4
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
@@ -15,6 +16,14 @@ def _hash_password(password: str) -> bytes:
     salted_hash = bcrypt.gensalt()
     hashed_password = bcrypt.hashpw(password.encode('utf-8'), salted_hash)
     return hashed_password
+
+
+def _generate_uuid() -> str:
+    """
+    uuid
+    """
+    new_id = uuid4()
+    return str(new_id)
 
 
 class Auth:
