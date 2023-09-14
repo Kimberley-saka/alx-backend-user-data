@@ -51,7 +51,7 @@ def login():
     return response
 
 
-@app.route('/sessions', methods['DELETE'])
+@app.route('/sessions', methods['DELETE'], strict_slashes=False)
 def logout():
     """
     Logout
@@ -65,7 +65,7 @@ def logout():
         return redirect('/')
 
 
-@app.route('/profile', methods=['GET'])
+@app.route('/profile', methods=['GET'], strict_slashes=False)
 def profile() -> str:
     """
     profile
@@ -78,12 +78,28 @@ def profile() -> str:
         abort(403)
 
 
-@app.route('/reset_password', methods=['POST'])
+@app.route('/reset_password', methods=['POST'], strict_slashes=False)
 def get_reset_password_token():
     email = request.form.get('email')
     try:
         reset_token = AUTH.get_reset_password_token(email)
         return jsonify({"email": email, "reset_token": reset_token}), 200
+    except Exception:
+        abort(403)
+
+
+@app.route('/reset_password', methods=['PUT'], strict_slashes=False)
+def update_password() -> str:
+    """
+    update passowrd
+    """
+    email = request.form.get('email')
+    reset_token = request.form.get('reset_token')
+    new_password = request.form.get('new_password')
+
+    try:
+        AUTH.update_password(reset_token, new_password)
+        return jsonify({"email": email, "message": "Password updated"}), 200
     except Exception:
         abort(403)
 
