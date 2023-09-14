@@ -3,7 +3,7 @@
 Create passoword hash
 """
 import bcrypt
-import uuid4
+import uuid
 from sqlalchemy.orm.exc import NoResultFound
 from db import DB
 from user import User
@@ -22,7 +22,7 @@ def _generate_uuid() -> str:
     """
     uuid
     """
-    new_id = uuid4()
+    new_id = uuid.uuid4()
     return str(new_id)
 
 
